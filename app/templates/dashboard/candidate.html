@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div><h2 class="mb-1">Candidate dashboard</h2><p class="text-muted mb-0">Track your applications and discover opportunities.</p></div>
+  <a class="btn btn-primary" href="{{ url_for('jobs.list_jobs') }}">Browse jobs</a>
+</div>
+<div class="row g-4">
+  <div class="col-6 col-lg-3"><div class="card p-3"><h6>Profile completion</h6><h2>{{ metrics.profile_completion }}%</h2></div></div>
+  <div class="col-6 col-lg-3"><div class="card p-3"><h6>Applications</h6><h2>{{ metrics.applications }}</h2></div></div>
+  <div class="col-6 col-lg-3"><div class="card p-3"><h6>Shortlisted</h6><h2>{{ metrics.shortlisted }}</h2></div></div>
+  <div class="col-6 col-lg-3"><div class="card p-3"><h6>Interviews</h6><h2>{{ metrics.interviews }}</h2></div></div>
+</div>
+<div class="mt-4 card p-4">
+  <div class="d-flex justify-content-between align-items-center"><h4>Recommended jobs</h4><a href="{{ url_for('jobs.list_jobs') }}">See all jobs</a></div>
+  {% if recommendations %}
+    <div class="row g-3 mt-1">
+      {% for job in recommendations %}
+        <div class="col-md-6"><div class="border rounded p-3 h-100">
+          <a class="h5 text-decoration-none" href="{{ url_for('jobs.details', job_id=job.id) }}">{{ job.title }}</a>
+          <p class="text-muted mb-1">{{ job.location }} · {{ job.work_mode }}</p>
+          <span class="badge bg-success">{{ job.match_percent }}% match</span>
+          {% if job.matched_skills %}<p class="small mt-2 mb-0">Skills: {{ job.matched_skills|join(', ') }}</p>{% endif %}
+        </div></div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-muted mb-0">Complete your profile and add skills to get job recommendations.</p>
+  {% endif %}
+</div>
+{% endblock %}

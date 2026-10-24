@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4">Interviews</h2>
+<div class="card p-3">
+  {% if interviews %}
+    <div class="table-responsive"><table class="table mb-0">
+      <thead><tr><th>Date</th><th>Time</th><th>Type</th><th>Status</th><th>Meeting</th></tr></thead>
+      <tbody>{% for interview in interviews %}<tr>
+        <td>{{ interview.date }}</td><td>{{ interview.time }}</td><td>{{ interview.type }}</td><td>{{ interview.status }}</td>
+        <td>{% if interview.meeting_link %}<a href="{{ interview.meeting_link }}" target="_blank" rel="noopener">Open link</a>{% else %}—{% endif %}</td>
+      </tr>{% endfor %}</tbody>
+    </table></div>
+  {% else %}<p class="text-muted mb-0">No interviews are scheduled.</p>{% endif %}
+</div>
+{% endblock %}

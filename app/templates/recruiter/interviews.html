@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4">Interviews</h2>
+<div class="row g-4">
+  <div class="col-lg-5"><div class="card p-4">
+    <h5>Schedule an interview</h5>
+    {% if applications %}
+      <form method="post" action="{{ url_for('recruiter.interviews') }}">
+        <div class="mb-3"><label class="form-label">Application</label><select class="form-select" name="application_id" required>
+          {% for application in applications %}<option value="{{ application.id }}">{{ jobs[application.job_id].title }} — {{ application.candidate_id }}</option>{% endfor %}
+        </select></div>
+        <div class="mb-3"><label class="form-label">Date</label><input class="form-control" type="date" name="date" required></div>
+        <div class="mb-3"><label class="form-label">Time</label><input class="form-control" type="time" name="time" required></div>
+        <div class="mb-3"><label class="form-label">Interview type</label><select class="form-select" name="type"><option>ONLINE</option><option>PHONE</option><option>IN_PERSON</option></select></div>
+        <div class="mb-3"><label class="form-label">Meeting link (optional)</label><input class="form-control" type="url" name="meeting_link"></div>
+        <button class="btn btn-primary">Schedule interview</button>
+      </form>
+    {% else %}<p class="text-muted mb-0">There are no eligible applications to schedule interviews for.</p>{% endif %}
+  </div></div>
+  <div class="col-lg-7"><div class="card p-3">
+    <h5>Scheduled interviews</h5>
+    {% if interviews %}
+      <div class="table-responsive"><table class="table mb-0"><thead><tr><th>Date</th><th>Time</th><th>Candidate</th><th>Type</th><th>Status</th></tr></thead><tbody>
+        {% for interview in interviews %}<tr><td>{{ interview.date }}</td><td>{{ interview.time }}</td><td>{{ interview.candidate_id }}</td><td>{{ interview.type }}</td><td>{{ interview.status }}</td></tr>{% endfor %}
+      </tbody></table></div>
+    {% else %}<p class="text-muted mb-0">No interviews scheduled.</p>{% endif %}
+  </div></div>
+</div>
+{% endblock %}

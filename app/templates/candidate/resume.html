@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center"><div class="col-lg-8">
+  <div class="card p-4">
+    <h2>Resume</h2>
+    <p class="text-muted">Upload a PDF, DOC, or DOCX resume (up to 5 MB).</p>
+    <form method="post" enctype="multipart/form-data" action="{{ url_for('candidate.resume') }}" class="mb-4">
+      <div class="input-group"><input class="form-control" type="file" name="resume" accept=".pdf,.doc,.docx" required><button class="btn btn-primary">Upload resume</button></div>
+    </form>
+    <h5>Uploaded files</h5>
+    <div class="list-group">
+      {% for item in resumes %}
+        <a class="list-group-item list-group-item-action d-flex justify-content-between" href="{{ url_for('candidate.download_resume', resume_id=item.id) }}"><span>{{ item.original_name }}</span><small>{{ item.created_at[:10] }}</small></a>
+      {% else %}<div class="list-group-item text-muted">No resume uploaded.</div>{% endfor %}
+    </div>
+  </div>
+</div></div>
+{% endblock %}

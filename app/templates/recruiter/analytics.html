@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4">Recruiter analytics</h2>
+<div class="row g-3">
+  <div class="col-sm-6 col-lg-3"><div class="card p-3"><small>Open jobs</small><h2>{{ metrics.open_jobs }}</h2></div></div>
+  <div class="col-sm-6 col-lg-3"><div class="card p-3"><small>Total jobs</small><h2>{{ metrics.total_jobs }}</h2></div></div>
+  <div class="col-sm-6 col-lg-3"><div class="card p-3"><small>Applications</small><h2>{{ metrics.total_applications }}</h2></div></div>
+  <div class="col-sm-6 col-lg-3"><div class="card p-3"><small>Shortlisted</small><h2>{{ metrics.shortlisted }}</h2></div></div>
+</div>
+<p class="text-muted mt-3">Platform totals are shown here; job and applicant lists are restricted to your recruiter account.</p>
+{% endblock %}

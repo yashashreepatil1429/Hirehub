@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4">Applicants</h2>
+<div class="card p-3">
+  {% if applications %}
+    <div class="table-responsive"><table class="table align-middle mb-0">
+      <thead><tr><th>Candidate ID</th><th>Job</th><th>Applied</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody>{% for application in applications %}
+        {% set job = jobs.get(application.job_id, {}) %}
+        <tr>
+          <td>{{ application.candidate_id }}</td><td>{{ job.get('title', 'Job') }}</td><td>{{ application.applied_at[:10] if application.applied_at else '—' }}</td>
+          <td>{{ application.status|replace('_', ' ')|title }}</td>
+          <td><div class="d-flex gap-1">
+            {% for action in ['shortlist', 'reject', 'select'] %}
+              <form method="post" action="{{ url_for('recruiter.application_action', application_id=application.id, action=action) }}"><button class="btn btn-sm btn-outline-secondary">{{ action|title }}</button></form>
+            {% endfor %}
+          </div></td>
+        </tr>
+      {% endfor %}</tbody>
+    </table></div>
+  {% else %}<p class="text-muted mb-0">No applications have been received for your jobs.</p>{% endif %}
+</div>
+{% endblock %}

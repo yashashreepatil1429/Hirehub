@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center"><div class="col-lg-9">
+  <div class="card p-4">
+    <h2>My profile</h2>
+    <p class="text-muted">Keep your profile updated so employers can evaluate your application.</p>
+    <form method="post" action="{{ url_for('candidate.profile') }}">
+      <div class="row g-3">
+        <div class="col-md-6"><label class="form-label">Name</label><input class="form-control" name="name" value="{{ profile.get('name', '') }}" required></div>
+        <div class="col-md-6"><label class="form-label">Email</label><input class="form-control" type="email" value="{{ profile.get('email', '') }}" disabled></div>
+        <div class="col-md-6"><label class="form-label">Phone</label><input class="form-control" name="phone" value="{{ profile.get('phone', '') }}"></div>
+        <div class="col-md-6"><label class="form-label">Location</label><input class="form-control" name="location" value="{{ profile.get('location', '') }}"></div>
+        <div class="col-12"><label class="form-label">Skills</label><input class="form-control" name="skills" value="{{ profile.get('skills', [])|join(', ') }}" placeholder="Python, SQL, communication"></div>
+        <div class="col-md-6"><label class="form-label">Education</label><input class="form-control" name="education" value="{{ profile.get('education', '') }}"></div>
+        <div class="col-md-3"><label class="form-label">Experience (years)</label><input class="form-control" type="number" min="0" name="experience" value="{{ profile.get('experience', 0) }}"></div>
+        <div class="col-md-3"><label class="form-label">Expected salary</label><input class="form-control" type="number" min="0" name="expected_salary" value="{{ profile.get('expected_salary', 0) }}"></div>
+        <div class="col-md-6"><label class="form-label">Notice period</label><input class="form-control" name="notice_period" value="{{ profile.get('notice_period', '') }}"></div>
+      </div>
+      <button class="btn btn-primary mt-4">Save profile</button>
+    </form>
+  </div>
+</div></div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="mb-4"><h2 class="mb-1">Admin dashboard</h2><p class="text-muted mb-0">Platform overview and administration.</p></div>
+<div class="row g-4">
+  <div class="col-6 col-lg-4"><div class="card p-3"><h6>Total users</h6><h2>{{ metrics.users }}</h2><a href="{{ url_for('admin.users') }}">Manage users</a></div></div>
+  <div class="col-6 col-lg-4"><div class="card p-3"><h6>Candidates</h6><h2>{{ metrics.candidates }}</h2></div></div>
+  <div class="col-6 col-lg-4"><div class="card p-3"><h6>Recruiters</h6><h2>{{ metrics.recruiters }}</h2></div></div>
+  <div class="col-6 col-lg-4"><div class="card p-3"><h6>Companies</h6><h2>{{ metrics.companies }}</h2><a href="{{ url_for('admin.companies') }}">Review companies</a></div></div>
+  <div class="col-6 col-lg-4"><div class="card p-3"><h6>Jobs</h6><h2>{{ metrics.jobs }}</h2><a href="{{ url_for('admin.jobs') }}">Moderate jobs</a></div></div>
+  <div class="col-6 col-lg-4"><div class="card p-3"><h6>Applications</h6><h2>{{ metrics.applications }}</h2><a href="{{ url_for('admin.applications') }}">Monitor applications</a></div></div>
+</div>
+{% endblock %}

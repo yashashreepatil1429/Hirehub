@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4">My applications</h2>
+<div class="card p-3">
+  {% if applications %}
+    <div class="table-responsive"><table class="table align-middle mb-0">
+      <thead><tr><th>Job</th><th>Applied</th><th>Status</th></tr></thead>
+      <tbody>{% for application in applications %}
+        {% set job = jobs.get(application.job_id, {}) %}
+        <tr>
+          <td>{% if job %}<a href="{{ url_for('jobs.details', job_id=job.id) }}">{{ job.title }}</a>{% else %}Job no longer available{% endif %}</td>
+          <td>{{ application.applied_at[:10] if application.applied_at else '—' }}</td>
+          <td class="d-flex align-items-center gap-2"><span class="badge bg-primary">{{ application.status|replace('_', ' ')|title }}</span>
+            {% if application.status not in ['SELECTED', 'REJECTED', 'WITHDRAWN'] %}<form method="post" action="{{ url_for('candidate.withdraw_application', application_id=application.id) }}"><button class="btn btn-sm btn-outline-danger">Withdraw</button></form>{% endif %}
+          </td>
+        </tr>
+      {% endfor %}</tbody>
+    </table></div>
+  {% else %}<p class="text-muted mb-0">You have not applied to any jobs yet. <a href="{{ url_for('jobs.list_jobs') }}">Browse open jobs</a>.</p>{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card p-4">
+  {% if job %}
+    <h3>{{ job.title }}</h3>
+    <p class="text-muted">{{ job.location }} • {{ job.work_mode }} • {{ job.employment_type }}</p>
+    <p>{{ job.description }}</p>
+    <div class="mb-3"><strong>Skills:</strong> {{ job.skills|join(', ') }}</div>
+    {% if session.get('role') == 'CANDIDATE' %}
+      <div class="d-flex gap-2">
+        {% if application %}
+          <div class="alert alert-info mb-0 d-flex align-items-center gap-2">
+            <span>You already applied. Status: <strong>{{ application.status|replace('_', ' ')|title }}</strong>.</span>
+            <a href="{{ url_for('candidate.applications') }}">View applications</a>
+          </div>
+        {% else %}
+          <form method="post" action="{{ url_for('jobs.apply', job_id=job.id) }}"><button class="btn btn-primary" {% if job.status != 'OPEN' %}disabled{% endif %}>Apply now</button></form>
+        {% endif %}
+        <form method="post" action="{{ url_for('jobs.save', job_id=job.id) }}"><button class="btn btn-outline-primary">{{ 'Saved' if saved else 'Save job' }}</button></form>
+      </div>
+    {% elif not session.get('user_id') %}
+      <a class="btn btn-primary" href="{{ url_for('auth.login') }}">Log in to apply</a>
+    {% endif %}
+  {% else %}
+    <div class="alert alert-warning">Job not found.</div>
+  {% endif %}
+</div>
+{% endblock %}

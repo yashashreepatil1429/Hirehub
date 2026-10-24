@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4">Audit logs</h2>
+<div class="card p-3"><div class="table-responsive"><table class="table mb-0">
+  <thead><tr><th>When</th><th>User</th><th>Action</th><th>Resource</th><th>Resource ID</th></tr></thead>
+  <tbody>{% for entry in logs|reverse %}<tr><td>{{ entry.timestamp }}</td><td>{{ entry.user_id }}</td><td>{{ entry.action }}</td><td>{{ entry.resource }}</td><td>{{ entry.resource_id }}</td></tr>
+  {% else %}<tr><td colspan="5" class="text-muted">No audit events recorded.</td></tr>{% endfor %}</tbody>
+</table></div></div>
+{% endblock %}

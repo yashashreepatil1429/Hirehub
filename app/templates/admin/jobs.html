@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4">Job moderation</h2>
+<div class="card p-3"><div class="table-responsive"><table class="table mb-0">
+  <thead><tr><th>Title</th><th>Recruiter</th><th>Location</th><th>Status</th></tr></thead>
+  <tbody>{% for job in jobs %}<tr><td><a href="{{ url_for('jobs.details', job_id=job.id) }}">{{ job.title }}</a></td><td>{{ job.recruiter_id }}</td><td>{{ job.location }}</td><td>{{ job.status }}</td></tr>
+  {% else %}<tr><td colspan="4" class="text-muted">No jobs posted.</td></tr>{% endfor %}</tbody>
+</table></div></div>
+{% endblock %}

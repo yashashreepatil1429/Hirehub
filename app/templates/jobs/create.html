@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card p-4">
+  <h3>Create Job</h3>
+  <form method="post" action="{{ url_for('recruiter.create_job') }}">
+    <div class="row g-3">
+      <div class="col-md-6"><label class="form-label">Title</label><input class="form-control" name="title" required></div>
+      <div class="col-md-6"><label class="form-label">Location</label><input class="form-control" name="location" required></div>
+      <div class="col-12"><label class="form-label">Description</label><textarea class="form-control" rows="4" name="description" required></textarea></div>
+      <div class="col-md-6"><label class="form-label">Skills (comma separated)</label><input class="form-control" name="skills"></div>
+      <div class="col-md-3"><label class="form-label">Minimum experience</label><input class="form-control" type="number" min="0" name="experience_min" value="0"></div>
+      <div class="col-md-3"><label class="form-label">Maximum experience</label><input class="form-control" type="number" min="0" name="experience_max" value="0"></div>
+      <div class="col-md-3"><label class="form-label">Minimum salary</label><input class="form-control" type="number" min="0" name="salary_min" value="0"></div>
+      <div class="col-md-3"><label class="form-label">Maximum salary</label><input class="form-control" type="number" min="0" name="salary_max" value="0"></div>
+      <div class="col-md-3"><label class="form-label">Work Mode</label><select class="form-select" name="work_mode"><option>REMOTE</option><option>HYBRID</option><option>ONSITE</option></select></div>
+      <div class="col-md-3"><label class="form-label">Employment Type</label><select class="form-select" name="employment_type"><option>FULL_TIME</option><option>PART_TIME</option><option>INTERNSHIP</option><option>CONTRACT</option></select></div>
+      <div class="col-md-3"><label class="form-label">Application deadline</label><input class="form-control" type="date" name="deadline"></div>
+    </div>
+    <button class="btn btn-primary mt-3" type="submit">Save Job</button>
+  </form>
+</div>
+{% endblock %}

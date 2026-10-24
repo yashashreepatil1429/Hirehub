@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4">Reports</h2>
+<div class="row g-3">
+  <div class="col-md-4"><div class="card p-4 h-100"><h5>Candidate report</h5><p class="text-muted">Registered candidates.</p><a class="btn btn-outline-primary mt-auto" href="{{ url_for('admin.report_csv', report_type='candidates') }}">Download CSV ({{ users|selectattr('role', 'equalto', 'CANDIDATE')|list|length }} rows)</a></div></div>
+  <div class="col-md-4"><div class="card p-4 h-100"><h5>Job report</h5><p class="text-muted">Jobs across the platform.</p><a class="btn btn-outline-primary mt-auto" href="{{ url_for('admin.report_csv', report_type='jobs') }}">Download CSV ({{ jobs|length }} rows)</a></div></div>
+  <div class="col-md-4"><div class="card p-4 h-100"><h5>Application report</h5><p class="text-muted">Application statuses and activity.</p><a class="btn btn-outline-primary mt-auto" href="{{ url_for('admin.report_csv', report_type='applications') }}">Download CSV ({{ applications|length }} rows)</a></div></div>
+</div>
+{% endblock %}

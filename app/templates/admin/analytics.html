@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4">Platform analytics</h2>
+<div class="row g-3 mb-4">
+  <div class="col-6 col-lg-3"><div class="card p-3"><small>Users</small><h3>{{ metrics.total_users }}</h3></div></div>
+  <div class="col-6 col-lg-3"><div class="card p-3"><small>Jobs</small><h3>{{ metrics.total_jobs }}</h3></div></div>
+  <div class="col-6 col-lg-3"><div class="card p-3"><small>Applications</small><h3>{{ metrics.total_applications }}</h3></div></div>
+  <div class="col-6 col-lg-3"><div class="card p-3"><small>Open jobs</small><h3>{{ metrics.open_jobs }}</h3></div></div>
+</div>
+<div class="row g-4">
+  <div class="col-lg-6"><div class="card p-3"><h5>Jobs by location</h5><canvas id="location-chart" aria-label="Jobs by location chart"></canvas></div></div>
+  <div class="col-lg-6"><div class="card p-3"><h5>Applications by status</h5><canvas id="status-chart" aria-label="Applications by status chart"></canvas></div></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const locations = {{ jobs_by_location|tojson }};
+  const statuses = {{ applications_by_status|tojson }};
+  new Chart(document.getElementById('location-chart'), {type: 'bar', data: {labels: locations.map(item => item.label), datasets: [{label: 'Jobs', data: locations.map(item => item.value), backgroundColor: '#5b75e7'}]}, options: {responsive: true}});
+  new Chart(document.getElementById('status-chart'), {type: 'doughnut', data: {labels: statuses.map(item => item.label), datasets: [{data: statuses.map(item => item.value), backgroundColor: ['#5b75e7', '#25a982', '#f3a73b', '#df5f71', '#8c66d8']}]}, options: {responsive: true}});
+</script>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4">User management</h2>
+<div class="card p-3"><div class="table-responsive"><table class="table align-middle mb-0">
+  <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th></th></tr></thead>
+  <tbody>{% for user in users %}<tr>
+    <td>{{ user.name }}</td><td>{{ user.email }}</td><td>{{ user.role|title }}</td>
+    <td>{{ 'Active' if user.get('is_active', true) else 'Inactive' }}</td>
+    <td>{% if user.id != session.get('user_id') %}<form method="post" action="{{ url_for('admin.toggle_user', user_id=user.id) }}"><button class="btn btn-sm btn-outline-{{ 'danger' if user.get('is_active', true) else 'success' }}">{{ 'Deactivate' if user.get('is_active', true) else 'Activate' }}</button></form>{% endif %}</td>
+  </tr>{% else %}<tr><td colspan="5" class="text-muted">No users registered.</td></tr>{% endfor %}</tbody>
+</table></div></div>
+{% endblock %}

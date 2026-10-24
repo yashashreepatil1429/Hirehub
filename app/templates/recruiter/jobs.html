@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4"><h2>My jobs</h2><a class="btn btn-primary" href="{{ url_for('recruiter.create_job') }}">Post a job</a></div>
+<div class="card p-3">
+  {% if jobs %}
+    <div class="table-responsive"><table class="table align-middle mb-0">
+      <thead><tr><th>Title</th><th>Location</th><th>Applications</th><th>Status</th><th></th></tr></thead>
+      <tbody>{% for job in jobs %}<tr>
+        <td><a href="{{ url_for('jobs.details', job_id=job.id) }}">{{ job.title }}</a></td><td>{{ job.location }}</td>
+        <td><a href="{{ url_for('recruiter.applicants') }}">{{ job.application_count|default(0) }}</a></td>
+        <td><span class="badge bg-{{ 'success' if job.status == 'OPEN' else 'secondary' }}">{{ job.status }}</span></td>
+        <td>{% if job.status == 'OPEN' %}<form method="post" action="{{ url_for('recruiter.close_job', job_id=job.id) }}"><button class="btn btn-sm btn-outline-danger">Close</button></form>{% endif %}</td>
+      </tr>{% endfor %}</tbody>
+    </table></div>
+  {% else %}<p class="text-muted mb-0">You have not posted a job yet.</p>{% endif %}
+</div>
+{% endblock %}
